@@ -29,7 +29,7 @@ case class Rules(alive_to_alive: List[Int], dead_to_alive: List[Int])
 
 case class GameTable(table: Array[Array[Int]], rules: Rules){
   def update : GameTable = {
-    var copied : Array[Array[Int]] = table;
+    var copied : Array[Array[Int]] = table.clone;
     for (i <- 0.to(119); j <- 0.to(159)){
       var neighbours: Int = List(
           table(InBound.row(i-1))(InBound.column(j-1)),
@@ -62,10 +62,11 @@ object RandomValue{
 }
 
 object TableGenerator{
-  def generate: GameTable =
+  def generateRandom: GameTable =
     new GameTable(
       1.to(120).toArray.map { (_ : Int) => 1.to(160).toArray.map { (_ : Int) => RandomValue.get} },
-      new Rules(List(1,2), List(3,4)) )
+      new Rules(List(2,3), List(3))
+    )
 }
 object Show{
   def draw_cell(x: Int): Image =
